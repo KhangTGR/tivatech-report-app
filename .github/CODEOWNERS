@@ -1,0 +1,12 @@
+# CODEOWNERS file
+# Define code owners for different parts of the repository
+
+# Global code owner
+* @global-owner
+
+# Frontend folder owner
+/src/frontend/* @KhangTGR
+
+# Define a global owner if needed
+# In this example, @global-owner is used as a placeholder; you can replace it with the actual global owner.
+* @global-owner
