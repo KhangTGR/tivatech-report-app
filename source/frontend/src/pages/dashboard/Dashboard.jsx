@@ -18,7 +18,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-
 import { PropTypes } from 'prop-types';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -31,127 +30,22 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PendingIcon from '@mui/icons-material/Pending';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
-
 import BugReportIcon from '@mui/icons-material/BugReport';
 import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import LogoutIcon from '@mui/icons-material/Logout';
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-const drawerWidth = 240;
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        '& .MuiDrawer-paper': {
-            position: 'relative',
-            whiteSpace: 'nowrap',
-            width: drawerWidth,
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-            boxSizing: 'border-box',
-            ...(!open && {
-                overflowX: 'hidden',
-                transition: theme.transitions.create('width', {
-                    easing: theme.transitions.easing.sharp,
-                    duration: theme.transitions.duration.leavingScreen,
-                }),
-                width: theme.spacing(7),
-                [theme.breakpoints.up('sm')]: {
-                    width: theme.spacing(9),
-                },
-            }),
-        },
-    }),
-);
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
-}));
 
 function createData(id, task, deadline, status) {
     return {
@@ -320,6 +214,107 @@ function EnhancedTableToolbar() {
     );
 }
 
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit" href="https://mui.com/">
+                Your Website
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+
+const drawerWidth = 240;
+
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+        '& .MuiDrawer-paper': {
+            position: 'relative',
+            whiteSpace: 'nowrap',
+            width: drawerWidth,
+            transition: theme.transitions.create('width', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+            boxSizing: 'border-box',
+            ...(!open && {
+                overflowX: 'hidden',
+                transition: theme.transitions.create('width', {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.leavingScreen,
+                }),
+                width: theme.spacing(7),
+                [theme.breakpoints.up('sm')]: {
+                    width: theme.spacing(9),
+                },
+            }),
+        },
+    }),
+);
+
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+    },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: '12ch',
+            '&:focus': {
+                width: '20ch',
+            },
+        },
+    },
+}));
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
@@ -329,7 +324,10 @@ export default function Dashboard() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const [currentStatusFilter, setCurrentStatusFilter] = useState('All'); // Initialize with 'All'
+    const [currentStatusFilter, setCurrentStatusFilter] = useState('All');
+    const [searchQuery, setSearchQuery] = useState("");
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -338,7 +336,12 @@ export default function Dashboard() {
     };
 
     const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+        const nextPageStartIndex = newPage * rowsPerPage;
+        const remainingRows = filteredRows.length - nextPageStartIndex;
+
+        if (remainingRows >= 0) {
+            setPage(newPage);
+        }
     };
 
     const handleChangeRowsPerPage = (event) => {
@@ -352,15 +355,29 @@ export default function Dashboard() {
 
     const handleStatusFilter = (status) => {
         setCurrentStatusFilter(status);
+        setPage(0); // Reset the page to the first page when a filter is applied
     };
 
-    // Filter rows based on the currentStatusFilter
-    const filteredRows =
-        currentStatusFilter === 'All' ? rows : rows.filter((row) => row.status == currentStatusFilter);
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+        setPage(0); // Reset the page to the first page when a filter is applied
+    };
 
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+        setPage(0); // Reset the page to the first page when a filter is applied
+    };
+
+    const filteredRows = rows.filter((row) => {
+        return (
+            (currentStatusFilter === 'All' || row.status === currentStatusFilter) &&
+            (searchQuery === "" || row.task.toLowerCase().includes(searchQuery.toLowerCase())) &&
+            (startDate === null || new Date(row.deadline) >= startDate) &&
+            (endDate === null || new Date(row.deadline) <= endDate)
+        );
+    });
+
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredRows.length) : 0;
 
     const visibleRows = React.useMemo(
         () =>
@@ -370,7 +387,6 @@ export default function Dashboard() {
             ),
         [order, orderBy, page, rowsPerPage, filteredRows],
     );
-
 
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
@@ -506,13 +522,23 @@ export default function Dashboard() {
                                     <Box sx={{ m: 1, flexDirection: 'row', display: 'flex' }}>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <DemoContainer components={['DatePicker']} sx={{ p: 1, mr: 1 }}>
-                                                <DatePicker label="Start Date" sx={{ borderRadius: 1, backgroundColor: 'white' }} />
+                                                <DatePicker
+                                                    value={startDate}
+                                                    onChange={handleStartDateChange}
+                                                    label="Start Date"
+                                                    sx={{ borderRadius: 1, backgroundColor: 'white' }}
+                                                />
                                             </DemoContainer>
                                         </LocalizationProvider>
 
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <DemoContainer components={['DatePicker']} sx={{ p: 1 }}>
-                                                <DatePicker label="End Date" sx={{ borderRadius: 1, backgroundColor: 'white', color: 'white' }} />
+                                                <DatePicker
+                                                    value={endDate}
+                                                    onChange={handleEndDateChange}
+                                                    label="End Date"
+                                                    sx={{ borderRadius: 1, backgroundColor: 'white' }}
+                                                />
                                             </DemoContainer>
                                         </LocalizationProvider>
                                     </Box>
@@ -524,6 +550,11 @@ export default function Dashboard() {
                                         <StyledInputBase
                                             placeholder="Search…"
                                             inputProps={{ 'aria-label': 'search' }}
+                                            value={searchQuery}
+                                            onChange={(e) => {
+                                                setSearchQuery(e.target.value);
+                                                setPage(0);
+                                            }}
                                         />
                                     </Search>
                                 </Toolbar>
