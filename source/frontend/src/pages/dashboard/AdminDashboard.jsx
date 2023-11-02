@@ -44,8 +44,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 import BugReportIcon from '@mui/icons-material/BugReport';
-import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Tooltip from '@mui/material/Tooltip';
 
 function createData(id, task, deadline, status) {
     return {
@@ -131,7 +132,7 @@ const headCells = [
         id: 'task',
         numeric: false,
         disablePadding: false,
-        label: 'Task',
+        label: 'Task name',
     },
     {
         id: 'deadline',
@@ -208,8 +209,14 @@ function EnhancedTableToolbar() {
                 id="tableTitle"
                 component="div"
             >
-                Tasks
+                Task Management
             </Typography>
+
+            <Tooltip title="Add Task">
+                <IconButton>
+                    <AddCircleIcon sx={{ color: 'orange', fontSize: '40px' }} />
+                </IconButton>
+            </Tooltip>
         </Toolbar>
     );
 }
@@ -318,7 +325,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function AdminDashboard() {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('deadline');
     const [page, setPage] = React.useState(0);
@@ -397,7 +404,7 @@ export default function Dashboard() {
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <AppBar position="absolute" open={open}>
+                <AppBar position="absolute" open={open} sx={{ background: 'orange' }}>
                     <Toolbar
                         sx={{
                             pr: '24px', // keep right padding when drawer closed
@@ -443,7 +450,7 @@ export default function Dashboard() {
                     <List component="nav">
                         <React.Fragment>
                             <ListSubheader component="div" inset>
-                                Tasks Management
+                                Task Status
                             </ListSubheader>
                             <ListItemButton onClick={() => handleStatusFilter('All')}>
                                 <ListItemIcon>
@@ -489,12 +496,6 @@ export default function Dashboard() {
                             </ListItemButton>
                             <ListItemButton>
                                 <ListItemIcon>
-                                    <DisplaySettingsIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Settings" />
-                            </ListItemButton>
-                            <ListItemButton>
-                                <ListItemIcon>
                                     <LogoutIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Logout" />
@@ -518,7 +519,7 @@ export default function Dashboard() {
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                         <Box sx={{ flexGrow: 1 }}>
                             <AppBar position="static">
-                                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                                <Toolbar sx={{ justifyContent: 'space-between', background: "orange" }}>
                                     <Box sx={{ m: 1, flexDirection: 'row', display: 'flex' }}>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <DemoContainer components={['DatePicker']} sx={{ p: 1, mr: 1 }}>
