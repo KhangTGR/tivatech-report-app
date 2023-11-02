@@ -23,13 +23,10 @@ import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useTheme } from '@mui/material/styles';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
 
 function Copyright(props) {
     return (
@@ -90,17 +87,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
-
 const names = [
     {
         id: 'a1',
@@ -144,33 +130,14 @@ const names = [
     }
 ];
 
-function getStyles(name, personName, theme) {
-    return {
-        fontWeight:
-            personName.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
-}
-
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function AddTask() {
-    const theme = useTheme();
-    const [personName, setPersonName] = React.useState([]);
     const [name, setName] = React.useState(''); // State for name input
     const [description, setDescription] = React.useState(''); // State for description input
     const [deadline, setDeadline] = React.useState(''); // State for deadline input
-
-    const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };
+    const [assignee, setAssignee] = React.useState('');
 
     const handleNameChange = (event) => {
         setName(event.target.value);
@@ -184,20 +151,30 @@ export default function AddTask() {
         setDeadline(event.target.value);
     };
 
+    const handleAssigneeChange = (event) => {
+        setAssignee(event.target.value);
+    };
+
     const handleAddTask = () => {
+        const selectedAssignee = names.find((assigneeObj) => assigneeObj.name === assignee);
+        
+        if (!selectedAssignee) {
+            console.error("Invalid assignee selected");
+            return;
+        }
+
         const taskData = {
             name: name,
             description: description,
             deadline: deadline,
-            dateAdded: new Date().toLocaleDateString(), // Get current day
-            assignees: personName.map((name) => ({
-                id: `a${names.findIndex((n) => n.name === name) + 1}`,
-                name: name,
-            })),
+            dateAdded: new Date().toLocaleDateString(),
+            assignee: {
+                id: selectedAssignee.id,
+                name: selectedAssignee.name,
+            },
         };
-
-        // Print the task data to the console
-        console.log(taskData);
+        
+        console.log(taskData); 
     };
 
     const [open, setOpen] = React.useState(true);
@@ -296,7 +273,14 @@ export default function AddTask() {
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                         <React.Fragment>
-                            <form>
+                            <Box sx={{
+                                background: "white",
+                                p: 2,
+                                pb: 1,
+                                pt: 3,
+                                mb: 4,
+                                boxShadow: 1,
+                            }}>
                                 <TextField
                                     type="text"
                                     variant='outlined'
@@ -338,41 +322,29 @@ export default function AddTask() {
                                             onChange={handleDeadlineChange} // Add onChange handler
                                         />
                                     </Box>
-                                    <FormControl sx={{ m: 1, width: 10000 }}>
-                                        <InputLabel id="demo-multiple-chip-label">Assignee(s)</InputLabel>
+
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Assignee</InputLabel>
                                         <Select
-                                            labelId="demo-multiple-chip-label"
-                                            id="demo-multiple-chip"
-                                            multiple
-                                            required
-                                            value={personName}
-                                            onChange={handleChange}
-                                            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                                            renderValue={(selected) => (
-                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                                    {selected.map((value) => (
-                                                        <Chip key={value} label={value} />
-                                                    ))}
-                                                </Box>
-                                            )}
-                                            MenuProps={MenuProps}
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            label="Assignee"
+                                            value={assignee}
+                                            onChange={handleAssigneeChange}
                                         >
-                                            {names.map((name) => (
-                                                <MenuItem
-                                                    key={name.id}
-                                                    value={name.name}
-                                                    style={getStyles(name.name, personName, theme)}
-                                                >
-                                                    {name.name}
-                                                </MenuItem>
+                                            {names.map((assignees) => (
+                                                <MenuItem key={assignees.id} value={assignees.name}>{assignees.name}</MenuItem>
                                             ))}
+                                            {/* <MenuItem value={10}>Ten</MenuItem>
+                                            <MenuItem value={20}>Twenty</MenuItem>
+                                            <MenuItem value={30}>Thirty</MenuItem> */}
                                         </Select>
                                     </FormControl>
                                 </Stack>
-                                <Box sx={{ display: 'flex', justifyContent: 'right' }}>
-                                    <Button onClick={handleAddTask} variant="contained" color="inherit" type="submit" sx={{ background: "orange", px: 5 }}>Add Task</Button>
-                                </Box>
-                            </form>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'right' }}>
+                                <Button onClick={handleAddTask} variant="contained" color="inherit" type="submit" sx={{ background: "orange", px: 5 }}>Add Task</Button>
+                            </Box>
                         </React.Fragment>
                         <Copyright sx={{ pt: 4 }} />
                     </Container>

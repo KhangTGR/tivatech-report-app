@@ -623,7 +623,6 @@ export default function UserDashboard() {
                                             label="Dense padding"
                                         />
                                     </Box>
-
                                 </Paper>
                             </Grid>
                         </Grid>
