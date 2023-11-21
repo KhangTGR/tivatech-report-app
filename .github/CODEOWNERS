@@ -6,6 +6,7 @@
 
 # Frontend folder owner
 /src/frontend/* @KhangTGR
+/src/backend/* @huy85285
 
 # Define a global owner if needed
 # In this example, @global-owner is used as a placeholder; you can replace it with the actual global owner.
