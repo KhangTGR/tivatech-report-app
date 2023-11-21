@@ -2,16 +2,17 @@
 
 import './App.css'
 
-// import UserTaskDetails from './pages/feature/UserTaskDetails'
-// import AddTask from './pages/feature/AddTask'
+import UserTaskDetails from './pages/task-details/UserTaskDetails'
+import AdminTaskDetails from './pages/task-details/AdminTaskDetails'
+import AddTask from './pages/feature/AddTask'
 import AdminDashboard from './pages/dashboard/AdminDashboard'
-// import UserDashboard from './pages/dashboard/UserDashboard'
-// import NoPage from "./pages/error/NoPage"
-// import SignIn from "./pages/sign-in/SignIn"
+import UserDashboard from './pages/dashboard/UserDashboard'
+import NoPage from "./pages/error/NoPage"
+import SignIn from "./pages/sign-in/SignIn"
 
 function App() {
   return (
-    <AdminDashboard></AdminDashboard>
+    <AdminTaskDetails></AdminTaskDetails>
   )
 }
 
