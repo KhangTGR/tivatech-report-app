@@ -22,7 +22,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import LogoutIcon from '@mui/icons-material/Logout';
-import CommentSection from './CommentSection';
+import Button from '@mui/material/Button';
 
 function Copyright(props) {
     return (
@@ -89,23 +89,64 @@ const taskDetail = {
     deadline: '2024-03-15',
     description: `
     The project aims to implement a rigorous sanitization and disinfection program designed to safeguard the health and safety of our employees and visitors. This program includes frequent disinfection of high-touch surfaces, enhanced cleaning protocols, and the use of industry-leading cleaning products. `,
-    status: 'Pending',
+    status: 'Cancelled',
 };
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function UserTaskDetails() {
+export default function AdminTaskDetails() {
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
+    };
+
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'Pending':
+                return '#ff9800'; // Orange for Pending
+            case 'Complete':
+                return '#4caf50'; // Green for Complete
+            case 'Cancelled':
+                return '#f44336'; // Red for Cancelled
+            case 'Error':
+                return '#fdd835'; // Yellow for Error
+            case 'Verifying':
+                return '#2196f3'; // Blue for Verifying
+            default:
+                return '#000'; // Default color
+        }
+    };
+
+    const statusColor = getStatusColor(taskDetail.status);
+
+    const renderStatusButtons = () => {
+        switch (taskDetail.status) {
+            case 'Pending':
+                return (
+                    <Button variant="contained" sx={{ mt: 1, backgroundColor: "#f44336" }}>Delete</Button>
+                );
+            case 'Verifying':
+                return (
+                    <Button variant="contained" sx={{ mt: 1, backgroundColor: "#4caf50" }}>Complete</Button>
+                );
+            case 'Error':
+                return (
+                    <React.Fragment>
+                        <Button variant="contained" sx={{ mt: 1, backgroundColor: "#f44336" }}>Cancelled</Button>
+                        <Button variant="contained" sx={{ mt: 1, ml: 1, backgroundColor: "#fdd835" }}>Edit</Button>
+                    </React.Fragment>
+                );
+            default:
+                return null;
+        }
     };
 
     return (
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <AppBar position="absolute" open={open} >
+                <AppBar position="absolute" open={open} sx={{ background: 'orange' }}>
                     <Toolbar
                         sx={{
                             pr: '24px', // keep right padding when drawer closed
@@ -196,7 +237,7 @@ export default function UserTaskDetails() {
                                 sx={{
                                     pl: { sm: 2 },
                                     pr: { xs: 1, sm: 1 },
-                                    background: '#1976d2',
+                                    background: 'orange',
                                     color: 'white'
                                 }}
                             >
@@ -214,7 +255,6 @@ export default function UserTaskDetails() {
                                 outlineColor: '#ddd',
                                 outlineStyle: 'solid',
                                 p: 2,
-                                mb: 2
                             }}>
                                 <Box sx={{ my: 0 }}>
                                     {taskDetail.description}
@@ -223,18 +263,39 @@ export default function UserTaskDetails() {
                             <Divider />
                             <Grid container spacing={3}>
                                 <Grid item xs={12}>
-                                    <Paper sx={{
-                                        p: 2,
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between'
-                                    }}>
-                                        <Box>Status: {taskDetail.status}</Box>
+                                    <Paper
+                                        sx={{
+                                            p: 2,
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                        }}
+                                    >
+                                        <Box sx={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                        }}>
+                                            Status:
+                                            <Box
+                                                sx={{
+                                                    ml: 1,
+                                                    backgroundColor: statusColor, // Color for the small box
+                                                    borderRadius: '4px', // Rounded corners for the box
+                                                    color: '#fff', // Text color for better contrast
+                                                    padding: '4px', // Padding inside the box
+                                                }}
+                                            >
+                                                {taskDetail.status}
+                                            </Box>
+                                        </Box>
                                         <Box>Deadline: {taskDetail.deadline}</Box>
                                     </Paper>
                                 </Grid>
                             </Grid>
-                            <CommentSection></CommentSection>
+                            <Box>
+                                {renderStatusButtons()}
+                            </Box>
                         </Container>
                         <Copyright sx={{ pt: 4 }} />
                     </Container>
