@@ -8,6 +8,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
+import { useState } from 'react'
 
 function Copyright(props) {
     return (
@@ -25,6 +27,8 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const [error, setError] = useState(null);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -41,16 +45,24 @@ export default function SignIn() {
             });
 
             if (response.ok) {
-                // Handle successful sign-in (e.g., redirect to another page)
-                console.log('Sign-in successful');
+                const data = await response.json();
+                if (data.status === 'OK') {
+                    // console.log('Sign-in successful', data);
+                } else {
+                    setError(data.message);
+                }
             } else {
-                // Handle sign-in failure (e.g., show error message)
-                console.error('Sign-in failed');
+                const errorData = await response.json();
+                setError('Sign-in failed', errorData);
             }
         } catch (error) {
-            // Handle network errors or other exceptions
             console.error('Error occurred:', error);
+            setError('An error occurred. Please try again.');
         }
+    };
+
+    const handleAlertClose = () => {
+        setError(null);
     };
 
     return (
@@ -104,6 +116,13 @@ export default function SignIn() {
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
+            {error && (
+                <Box sx={{ mt: 2 }}>
+                    <Alert severity="error" onClose={handleAlertClose}>
+                        {error}
+                    </Alert>
+                </Box>
+            )}
         </ThemeProvider>
     );
 }
