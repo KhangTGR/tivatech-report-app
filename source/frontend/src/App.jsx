@@ -1,4 +1,4 @@
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import './App.css'
 
@@ -12,8 +12,18 @@ import SignIn from "./pages/sign-in/SignIn"
 
 function App() {
   return (
-    <AdminTaskDetails></AdminTaskDetails>
-  )
+    <Router>
+      <Routes>
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/:username/user/dashboard" element={<UserDashboard />} />
+        <Route path="/:username/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/:username/admin/addtask" element={<AddTask />} />
+        <Route path="/:username/user/:taskid" element={<UserTaskDetails />} />
+        <Route path="/:username/admin/:taskid" element={<AdminTaskDetails />} />
+        <Route path="/*" element={<NoPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
