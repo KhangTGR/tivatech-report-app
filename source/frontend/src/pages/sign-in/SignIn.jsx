@@ -25,13 +25,32 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            username: data.get('username'),
-            password: data.get('password'),
-        });
+        const formData = new FormData(event.currentTarget);
+        const username = formData.get('username');
+        const password = formData.get('password');
+
+        try {
+            const response = await fetch('http://localhost:5011/api/account/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (response.ok) {
+                // Handle successful sign-in (e.g., redirect to another page)
+                console.log('Sign-in successful');
+            } else {
+                // Handle sign-in failure (e.g., show error message)
+                console.error('Sign-in failed');
+            }
+        } catch (error) {
+            // Handle network errors or other exceptions
+            console.error('Error occurred:', error);
+        }
     };
 
     return (
